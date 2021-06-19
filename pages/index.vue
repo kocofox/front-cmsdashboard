@@ -1,89 +1,242 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
+  <div>
+    <v-carousel cycle delimiter-icon="mdi-minus">
+      <v-carousel-item
+        v-for="(item, i) in banner"
+        :key="i"
+        :src="item.url"
+        reverse-transition="fade-transition"
+        transition="fade-transition"
+        class="gradient-fill"
+      >
+        <v-container fill-height>
+          <div style="max-width: 600px">
+            <div class="text-md-h2 mb-3 text-sm-h3 text-h5 font-weight-black white--text">
+             {{item.alt}}
+            </div>
+            <p class="mb-5 white--text h6">{{item.descripcion}}</p>
+            <v-btn :x-large="$vuetify.breakpoint.smAndUp" class="my-3 primary"
+              >Leer más</v-btn
             >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
+            <span class="mx-2 my-4"></span>
+            
           </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+        </v-container>
+      </v-carousel-item>
+    </v-carousel>
+
+    <v-container >
+   <v-row align-content="center" justify="center">
+     <v-col cols="12" lg="12" xl="9" md="10">
+       <v-card-title class="text-h4 text-center font-weight-light mb-xs-4"
+        ><v-spacer></v-spacer>Nuestros Trabajos<v-spacer></v-spacer
+      ></v-card-title>
+      <v-responsive class="mx-auto" width="128">
+        <v-divider class="mb-1"></v-divider>
+
+        <v-divider></v-divider>
+      </v-responsive>
+      <v-row class="mt-2">
+        <v-col cols="12" md="3" v-for="servi in servicios" :key="servi.id">
+          <v-card flat dark :to="'servicios/' + servi.nombre">
+            <v-img
+              :src="servi.imagen"
+              :aspect-ratio="16 / 9"
+              gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
+              height="450px"
+              class="elevation-2 fill-height"
+            >
+              <div class="d-flex flex-column justify-space-between fill-height">
+                <v-card-text>
+                  <v-btn color="#69AA3D"
+                    ><v-icon class="mr-1">
+                      mdi-map-marker-radius-outline </v-icon
+                    >{{ servi.lugar }}</v-btn
+                  >
+                </v-card-text>
+
+                <v-card-text>
+                  <div class="d-flex align-center">
+                    <v-avatar color="accent" size="36">
+                      <v-icon dark>mdi-lan</v-icon>
+                    </v-avatar>
+
+                    <div
+                      class="text-h5 py-3 pl-2 font-weight-bold"
+                      style="line-height: 1.2"
+                    >
+                      {{ servi.nombre }}
+                    </div>
+                  </div>
+                </v-card-text>
+              </div>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+
+     
+      <v-row class="grey lighten-4 mt-8">
+        <v-col cols="12" sm="3" align-self="center">
+          <p
+            :class="$vuetify.theme.dark ? 'grey--text' : null"
+            class="text-h5 text-center font-weight-light mb-xs-4"
           >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+            NUESTROS CLIENTES
+          </p>
+        </v-col>
+        <v-col cols="12" sm="9">
+          <v-slide-group show-arrows draggable="true">
+            <template>
+              <v-slide-item v-for="cliente in clientes" :key="cliente.id">
+                <v-card
+                  :class="$vuetify.theme.dark ? 'white' : 'grey lighten-4'"
+                  class="mx-4 pa-0"
+                  height="90"
+                  width="140"
+                  flat
+                >
+                  <v-img height="90" contain :src="cliente.logo"></v-img>
+                </v-card>
+              </v-slide-item>
+              <v-responsive height="50" class="my-auto">
+                <v-divider vertical></v-divider>
+              </v-responsive>
+            </template>
+          </v-slide-group>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-card flat>
+            <v-card-title class="text-h4 text-center font-weight-light mb-xs-4"
+              ><v-spacer></v-spacer>Notícias<v-spacer></v-spacer
+            ></v-card-title>
+            <v-responsive class="mx-auto" width="128">
+              <v-divider class="mb-1"></v-divider>
+
+              <v-divider></v-divider>
+            </v-responsive>
+            <v-row>
+              <v-col v-for="(noti, i) in noticias" :key="i" cols="12" md="4">
+                <v-hover
+                  v-slot:default="{ hover }"
+                  open-delay="50"
+                  close-delay="50"
+                >
+                  <div>
+                    <v-card
+                      flat
+                      :color="hover ? 'white' : 'transparent'"
+                      :elevation="hover ? 12 : 0"
+                      hover
+                      :to="'noticias/' + noti.titulo"
+                    >
+                      <v-img
+                        :src="noti.img"
+                        :aspect-ratio="16 / 9"
+                        gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
+                        height="200px"
+                        class="elevation-2"
+                        style="border-radius: 16px"
+                      >
+                        <v-card-text>
+                          <v-btn color="accent" to="category"> {{noti.categoria.nombre}} </v-btn>
+                        </v-card-text>
+                      </v-img>
+
+                      <v-card-text>
+                        <div class="text-h5 font-weight-bold primary--text">
+                          {{ noti.titulo }}
+                        </div>
+
+                        <p class="text-body-1 py-4" v-html="noti.contenido"></p>
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                </v-hover>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
+     </v-col>
+   </v-row>
+      
+    </v-container>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
-  }
+  layout: 'homepage',
+  beforeRouteEnter(to, from, next) {
+    to.meta.title = 'INICIO'
+    next()
+  },
+ 
+  data: () => ({
+    info: [],
+    banner: [],
+    servicios: [],
+    clientes: [],
+    noticias: [],
+    redes: [],
+    items: [
+      {
+        src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+      },
+      {
+        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+      },
+      {
+        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+      },
+      {
+        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+      },
+    ],
+
+    articles: [
+      {
+        src: 'https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+        title: 'Mobile first & Responsive',
+        text: 'Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. Sed ornare ligula eget tortor tempor, quis porta tellus dictum.',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1475938476802-32a7e851dad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+        title: 'Think outside the box',
+        text: 'Nam ut leo ipsum. Maecenas pretium aliquam feugiat. Aenean vel tempor est, vitae tincidunt risus. Sed sodales vestibulum nibh.',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1416339442236-8ceb164046f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1892&q=80',
+        title: 'Small changes, big difference',
+        text: 'Vestibulum in dictum velit, in rhoncus nibh. Maecenas neque libero, interdum a dignissim in, aliquet vitae lectus. Phasellus lorem enim, luctus ut velit eget.',
+      },
+    ],
+  }),
+  computed:{
+     footer(){
+       return this.info.footer
+     }
+  },
+  mounted() {
+    this.load()
+  },
+  methods: {
+    async load() {
+      try {
+        let response = await this.crud('get', '/home')
+        console.log(response.data.data, 'datos dsasa' )
+        this.info = response.Infoweb
+        this.noticias = response.data.data.Noticias.data
+        this.servicios = response.data.data.Servicios.Servicio
+        this.banner = response.data.data.Banner
+        this.servicios = response.data.data.Servicios.Servicio
+        this.clientes = response.data.data.Clientes.clientes
+      } catch (error) {}
+    },
+  },
 }
 </script>
+
