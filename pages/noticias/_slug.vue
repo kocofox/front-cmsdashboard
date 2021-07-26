@@ -87,6 +87,7 @@
 import redes from '~/components/theme/home/redessociales'
 export default {
   layout: 'homepage',
+   auth: false,
   name: 'Category',
   components: {
     redes,
@@ -94,7 +95,26 @@ export default {
   data() {
     return {
       noticias: [],
-      categoria: ""
+      categoria: "",
+      contenido:""
+    }
+  },
+  head() {
+    return {
+      title: this.$route.params.slug,
+      meta: [
+        {
+          hid: 'descripcion',
+          name: 'Descripcion',
+          content: this.categoria,
+        },
+        {
+          hid: 'Contenido',
+          name: 'Contenido',
+          content: this.contenido.slice(0,200),
+        },
+      ],
+      // link: [{ rel: 'icon', type: 'image/x-icon', href: this.info.favicon }],
     }
   },
   mounted() {
@@ -102,12 +122,13 @@ export default {
   },
   methods: {
     async load() {
-      let route = '/noticias/' + this.$route.params.slug
+      let route = '/noticia/' + this.$route.params.slug
       try {
         let response = await this.crud('get', route)
        
 
         this.noticias = response.data.data
+        this.contenido = response.data.data.contenido
         this.categoria = this.noticias.categoria.nombre
       } catch (error) {}
     },

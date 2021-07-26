@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card color="#69AA3D">
+    <v-card color="#31A2C7">
       <v-container>
         <v-row no-gutters>
           <v-col class="col-12 col-md-4 col-sm-12">
@@ -46,19 +46,23 @@
           >
 
           <v-spacer></v-spacer>
+            <div  v-for="icon in datos.redes"
 
-          <v-btn
-            v-for="icon in datos.redes"
-            :key="icon.id"
+          
+            :key="icon.id">
+              <v-btn
+            v-if="icon.link"
             class="mx-4"
             large
             icon
-            :to="icon.link"
+            :href="icon.link"
             
             target="_blank"
           >
             <v-icon large size="32px">{{ icon.icono }}</v-icon>
           </v-btn>
+            </div>
+          
         </v-card-title>
 
         <v-card-text class="py-2 white--text text-center">

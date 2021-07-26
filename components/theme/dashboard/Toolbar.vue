@@ -7,14 +7,15 @@
     <v-spacer />
 
     <v-menu
+    bottom
       offset-y
       origin="center center"
-      :nudge-right="140"
       :nudge-bottom="10"
-      transition="scale-transition"
+      left
+     
     >
-      <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="#b9cdef" dark v-bind="attrs" v-on="on">
           <v-icon>mdi-account-circle</v-icon>
         </v-btn>
       </template>
@@ -34,25 +35,21 @@
         </v-list>
 
         <v-divider></v-divider>
-        <v-list>
-          <v-list-item>
-            <v-list-item-action>
+        <v-list dense>
+          <v-list-item @click="handleLogout">
+            <!-- <v-list-item-action>
               <v-icon left> mdi-wrench </v-icon>
-            </v-list-item-action>
-            <v-list-item-title
-              ><v-btn class="ma-2" text color="indigo" to="/settings">
-                Panel Control
-              </v-btn></v-list-item-title
-            >
+            </v-list-item-action> -->
+            <v-list-item-title>Cerrar Sesión</v-list-item-title>
           </v-list-item>
         </v-list>
-        <v-card-actions>
+        <!-- <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn dark small color="red" @click="handleLogout">
             Cerrar Sesión
             <v-icon right>mdi-close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-menu>
 

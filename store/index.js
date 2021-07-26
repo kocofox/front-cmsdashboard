@@ -2,7 +2,7 @@ export const state = () => ({
   drawer: false,
   
   visitedItems: [
-    {name: "Inicio", path: "admin/", deletable: false}
+    {name: "Inicio", path: "/admin/", deletable: false}
   ],
   activo: false
 

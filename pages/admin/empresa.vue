@@ -1,7 +1,7 @@
 <template>
   <div class="height-100pc">
     <v-card class="py-2 height-100pc crud-card" elevation="1">
-      <v-stepper v-model="e1" >
+      <v-stepper v-model="e1">
         <v-stepper-header>
           <v-stepper-step :complete="e1 > 1" editable step="1">
             Información Básica
@@ -20,89 +20,55 @@
 
         <v-stepper-items>
           <v-stepper-content step="1" class="pa-2">
-            <v-row  >
-              <v-col cols="12" >
-                <v-card color="#E3F2FD" flat>
-                  <v-card-title> Título </v-card-title>
-                  <v-card-text>
-                    <v-text-field dense
-                      v-model="empresa.titulo"
-                      :error-messages="validate.titulo"
-                      persistent-placeholder
-                      outlined
-                      clearable
-                      rounded
-                      required
-                      hint="5 y 70 caracteres"
-                      persistent-hint
-                    ></v-text-field>
-                  </v-card-text>
-                </v-card> </v-col
-            ></v-row>
             <v-row>
-              <v-col cols="12" sm="6">
-                <v-row>
-                  <v-col cols="12">
-                    <v-card color="#F9FBE7">
-                      <v-card-title> Etiquetas </v-card-title>
+              <v-col cols="12" sm="7">
+                <v-row
+                  ><v-col cols="12">
+                    <v-card color="#E3F2FD" flat>
+                      <v-card-title> Título </v-card-title>
                       <v-card-text>
-                        <v-combobox
-                        dense
-                          v-model="model"
-                          hide-selected
-                          label="Agregar etiqueta"
-                          multiple
-                          small-chips
+                        <v-text-field
+                          dense
+                          v-model="empresa.titulo"
+                          :error-messages="validate.titulo"
+                          persistent-placeholder
                           outlined
-                        >
-                          <template
-                            v-slot:selection="{ attrs, item, parent, selected }"
-                          >
-                            <v-chip
-                              v-if="item === Object(item)"
-                              v-bind="attrs"
-                              :color="`${item.color} lighten-3`"
-                              :input-value="selected"
-                              label
-                              small
-                            >
-                              <span class="pr-2">
-                                {{ item.text }}
-                              </span>
-                              <v-icon small @click="parent.selectItem(item)">
-                                close
-                              </v-icon>
-                            </v-chip>
-                          </template>
-                        </v-combobox>
+                          
+                          required
+                          hint="5 y 70 caracteres"
+                          persistent-hint
+                        ></v-text-field>
                       </v-card-text>
                     </v-card> </v-col
                   ><v-col cols="12">
-                    <v-card color="#EDE7F6" height="100%">
-                      <v-card-title> Descripción </v-card-title>
-                      <v-card-text>
-                        <v-textarea
-                          v-model="empresa.descripcion"
-                          :error-messages="validate.descripcion"
-                          label=""
-                          persistent-placeholder
-                          outlined
-                          clearable
-                          rounded
-                          required
-                          hint="150 y 250 caracteres"
-                          persistent-hint
-                          prepend-icon="mdi-comment"
-                          counter="250"
-                          rows="2"
-                          dense
-                        ></v-textarea>
-                      </v-card-text>
-                    </v-card>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-card color="#EDE7F6" height="100%">
+                          <v-card-title> Descripción </v-card-title>
+                          <v-card-text>
+                            <v-textarea
+                              v-model="empresa.descripcion"
+                              :error-messages="validate.descripcion"
+                              label=""
+                              persistent-placeholder
+                              outlined
+                              
+                              required
+                              hint="150 y 250 caracteres"
+                              persistent-hint
+                              prepend-icon="mdi-comment"
+                              counter="250"
+                              rows="2"
+                              dense
+                            ></v-textarea>
+                          </v-card-text>
+                        </v-card>
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="5">
                 <v-row>
                   <v-col cols="12">
                     <v-card color="#E0F2F1">
@@ -204,13 +170,13 @@
                   </v-col>
                 </v-row>
               </v-col>
-
+            </v-row>
+            <v-row>
               <v-col cols="12">
                 <v-card color="#FFF3E0" height="100%">
                   <v-card-title> Footer </v-card-title>
                   <v-card-text>
-                    <v-row
-                      >
+                    <v-row>
                       <v-col>
                         <v-text-field
                           v-model="footer.numero"
@@ -218,7 +184,7 @@
                           persistent-placeholder
                           outlined
                           clearable
-                          rounded
+                          
                           required
                           hint="5 y 70 caracteres"
                           persistent-hint
@@ -233,7 +199,7 @@
                           persistent-placeholder
                           outlined
                           clearable
-                          rounded
+                          
                           required
                           hint="5 y 70 caracteres"
                           persistent-hint
@@ -248,7 +214,7 @@
                           persistent-placeholder
                           outlined
                           clearable
-                          rounded
+                          
                           required
                           hint="5 y 70 caracteres"
                           persistent-hint
@@ -261,10 +227,11 @@
                 </v-card>
               </v-col>
             </v-row>
-            <div class="text-right mt-4">
-              <v-btn color="primary" @click="e1 = 2"> Continue </v-btn>
 
-              <v-btn text> Cancel </v-btn>
+            <div class="text-right mt-4">
+              <v-btn color="primary" @click="e1 = 2"> continuar </v-btn>
+
+              <v-btn text> Cancelar </v-btn>
             </div>
           </v-stepper-content>
 
@@ -355,7 +322,6 @@
                         <v-text-field
                           :prepend-inner-icon="icon.icono"
                           v-model="empresa.redes[index].link"
-
                           outlined
                           :label="icon.nombre"
                           :color="icon.color"
@@ -518,7 +484,7 @@ export default {
 
         this.empresa = response.data.data
         this.model = this.empresa.etiquetas
-        
+
         //this.footer = this.empresa.footer
         //console.log(this.empresa.redes, 'uno')
         this.isBusy = false
@@ -530,7 +496,7 @@ export default {
         } else {
           this.footer = this.empresa.footer
         }
-        console.log(this.empresa.redes, 'dos')
+       // console.log(this.empresa.redes, 'dos')
       } catch (error) {
         this.alert.active = !this.alert.active
         this.alert.type = 'red'
@@ -551,7 +517,7 @@ export default {
       const data = new FormData()
       data.append('_method', 'PUT')
       data.append('titulo', this.empresa.titulo)
-      data.append('descripcion', this.empresa.descripcion)
+      // data.append('descripcion', this.empresa.descripcion)
       data.append('logo', this.uplogo)
       data.append('favicon', this.upFavi)
       data.append('redes', JSON.stringify(this.empresa.redes))
@@ -560,7 +526,7 @@ export default {
       data.append('vision', this.empresa.vision)
       data.append('footer', JSON.stringify(this.footer))
       data.append('etiquetas', JSON.stringify(this.model))
-      console.log(data)
+     // console.log(data)
       try {
         let response = await this.crud('post', this.route, data)
         this.alert.active = true
@@ -581,7 +547,7 @@ export default {
 
     onFileChange(evt) {
       let imglogo = evt.target.files[0]
-      console.log(imglogo, '1')
+//console.log(imglogo, '1')
       this.uplogo = imglogo
       var reader = new FileReader()
 
@@ -589,7 +555,7 @@ export default {
         this.logo = e.target.result
       }
       reader.readAsDataURL(imglogo)
-      console.log(imglogo, '2', this.logo)
+      //console.log(imglogo, '2', this.logo)
     },
 
     onFileChangef(evt) {
@@ -624,6 +590,5 @@ export default {
 img.preview {
   max-width: 220px;
   max-height: 220px;
-  
 }
 </style>

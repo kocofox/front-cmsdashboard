@@ -1,5 +1,5 @@
 <template>
-  <div class="height-100pc" id="uno">
+  <div  class="height-100pc">
     <v-card class="py-2 height-100pc crud-card"  elevation="1" >
       <v-data-table
         class="crud-table elevation-0"
@@ -10,7 +10,8 @@
         loading-text="Cargando... Por favor espere..."
         :options.sync="options"
         :server-items-length="pageCount"
-        hide-default-footer
+        hide-default-footer 
+        id="uno"
       >
         <template v-slot:top>
           <!--cabecera-->
@@ -22,27 +23,32 @@
                 medium
                 outlined
                 @click.stop="newItem"
-                >Nuevo
+                ><v-icon dark>
+        mdi-plus
+      </v-icon> Nuevo 
               </v-btn>
             </v-col>
           </v-row>
         </template>
         <template v-slot:item.logo="{ item }">
-          <img :src="item.logo" style="height: 50px" />
+          <img :src="item.logo" style="height: 25px" />
         </template>
         <template v-slot:item.imagen="{ item }">
-          <img :src="item.imagen" style="height: 50px" />
+          <img :src="item.imagen" style="height: 25px" />
         </template>
         <template v-slot:item.img="{ item }">
-          <img :src="item.img" style="height: 50px" />
+          <img :src="item.img" style="height: 25px" />
         </template>
         <template v-slot:item.url="{ item }">
-          <img :src="item.url" style="height: 50px" />
+          <img :src="item.url" style="height: 25px" />
         </template>
         <template v-slot:item.actions="{ item }">
           <v-btn-toggle color="primary" dense>
             <v-btn v-if="info.view != 7" @click.stop="Edit(item)">
               <v-icon large>mdi-pencil-outline</v-icon>
+            </v-btn>
+             <v-btn v-if="info.view == 7" @click.stop="Edit(item)">
+              <v-icon large>mdi-television</v-icon>
             </v-btn>
             <v-btn @click.stop="deleteItem(item)">
               <v-icon large>mdi-trash-can-outline</v-icon>
@@ -53,11 +59,12 @@
      <v-row
         justify="end"
         no-gutters
-        class="mb-n3 mr-5 crud-table-pagination"
+        class="mb-n3 mr-5 mt-4 crud-table-pagination"
         v-if="total > 1"
       >
         <!-- <v-col md="auto"> -->
          <v-pagination
+         class="pa-2 page-selection v-size--small"
           v-model="pagination.page"
           :length="total"
           @input="load()"
@@ -250,7 +257,7 @@ export default {
   watch: {
     drawer: function (data) {
       if (data) {
-        console.log(data, 'w')
+        //console.log(data, 'w')
         this.handleScroll()
       }
     },
@@ -301,20 +308,20 @@ export default {
       Object.entries(datos).forEach(([key, value]) => {
         if (value instanceof File) {
           formData.append(key, value || null)
-          console.log(key, value, 'file')
+         // console.log(key, value, 'file')
         } else if (typeof value === 'object' && value) {
           formData.append(key, JSON.stringify(value) || null)
-          console.log(key, JSON.stringify(value), 'obj')
+          //console.log(key, JSON.stringify(value), 'obj')
         } else if (Array.isArray(value)) {
           formData.append(key, JSON.stringify(value) || null)
-          console.log(key, JSON.stringify(value), 'array')
+          //console.log(key, JSON.stringify(value), 'array')
         } else {
           formData.append(key, value || null)
-          console.log(key, value, 'otros')
+         // console.log(key, value, 'otros')
         }
       })
       if (this.addSave == 'Edit') {
-        console.log('eeeee')
+        //console.log('eeeee')
         ruta = this.info.route + this.item.id
         formData.append('_method', 'PUT')
       }
@@ -381,7 +388,7 @@ export default {
       var dos = document.getElementById("dos");
       var tres = document.getElementById("tres");
        var cuatro = document.getElementById("cuatro");
-      console.log(uno.clientHeight,dos.clientHeight,tres.clientHeight,cuatro.clientHeight, 'datos')
+      //console.log(uno.clientHeight,dos.clientHeight,tres.clientHeight,cuatro.clientHeight, 'datos')
       const scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -391,13 +398,16 @@ export default {
       } else {
         this.scrollTop = 0
       }
-     this.navigationHeight = uno.clientHeight - this.scrollTop - 108
-      console.log(this.navigationHeight, 'ver', this.scrollTop, document.body.scrollHeight)
+     this.navigationHeight = document.body.scrollHeight - this.scrollTop - 80
+     // console.log(this.navigationHeight, 'ver', this.scrollTop, document.body.scrollHeight)
     },
   },
 }
 </script>
 <style >
+.height-100pc {
+    height: 100%!important;
+}
 .v-navigation-drawer__content {
   height: 85%;
   overflow-y: auto;
@@ -542,7 +552,5 @@ body >>> .v-data-table__checkbox .mdi-checkbox-marked {
 .nav-form {
   z-index: 99;
 }
-.height-100pc {
-   height: 100% !important
-}
+
 </style>

@@ -60,7 +60,7 @@ export default {
       
       switch (user) {
         case 1:
-          console.log('admin')
+         // console.log('admin')
           return (this.items = [
             
             //superadmin

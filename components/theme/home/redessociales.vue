@@ -40,7 +40,7 @@ export default {
 
         red.push(Obj);
       });
-      console.log(red);
+      //console.log(red);
       return red;
     },
   },

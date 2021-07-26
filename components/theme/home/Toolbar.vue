@@ -1,26 +1,18 @@
 <template>
   <div>
-      <v-system-bar
-      color="#69AA3D"
-      dark
-     
-    >
+    <v-system-bar color="#31A2C7" dark>
       <v-spacer></v-spacer>
 
-      
-        <v-btn text to="/admin"> <v-icon>mdi-lock</v-icon></v-btn>
-     
+      <v-btn text to="/admin"> <v-icon>mdi-lock</v-icon></v-btn>
     </v-system-bar>
-    <v-app-bar   height="100" color="#1f425d" dark>
+    <v-app-bar height="100" color="#1f425d" dark>
       <v-app-bar-nav-icon
         class="d-flex d-sm-none"
         @click="toggle"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
       <v-btn text large href="/">
-       <v-img :src="datos.logo"></v-img>
-
-        
+        <v-img :src="datos.logo"></v-img>
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -30,14 +22,11 @@
         text
         class="white--text hidden-sm-and-down"
         :to="link.path"
-
       >
         <v-icon class="mr-1">{{ link.icon }}</v-icon>
         {{ link.title }}
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-search</v-icon>
-      </v-btn>
+
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-navigation-drawer

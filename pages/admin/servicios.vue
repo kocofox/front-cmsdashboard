@@ -25,7 +25,6 @@ export default {
         route: "servicios/",
         headers: [
           { text: "Nombre", align: "start", sortable: false, value: "nombre" },
-          { text: "Descripcion", value: "descripcion" },
           { text: "Lugar", value: "lugar" },
           { text: "categoria", value: "categoria.nombre" },
           { text: "imagen", value: "imagen" },

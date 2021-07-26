@@ -9,7 +9,7 @@
           <v-main class="main-content">
             <v-container fluid class="height-100pc">
               <transition name="slide-left" appear>
-                <nuxt class="main-router-view" />
+                <nuxt class="main-router-view height-100pc" />
               </transition>
             </v-container>
             <footer></footer>
@@ -44,6 +44,9 @@ export default {
 .main-content {
   background-color: #f0f2f5;
   padding-top: 86px !important;
+}
+.height-100pc {
+    height: 100%!important;
 }
 .slide-left-enter-active,
 .slide-left-leave-active {

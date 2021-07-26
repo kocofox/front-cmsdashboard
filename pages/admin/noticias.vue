@@ -20,14 +20,13 @@ export default {
     return {
       enableMini: true,
       datos: {
-        title: "Slider",
+        title: " Noticias",
         view: 3,
         route: "noticias/",
         headers: [
           { text: "Título", align: "start", sortable: false, value: "titulo" },
-          { text: "contenido", value: "contenido" },
           { text: "Imagen", value: "img" },
-          { text: "status", value: "status" },
+          { text: "Categoria", value: "categoria.nombre" },
           { text: "etiquetas", value: "etiquetas" },
           { text: "Acciones", value: "actions", sortable: false },
         ],

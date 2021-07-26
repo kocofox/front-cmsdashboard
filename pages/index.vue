@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-carousel cycle delimiter-icon="mdi-minus">
+    <!-- banner -->
+    <v-carousel cycle delimiter-icon="mdi-minus"> 
       <v-carousel-item
         v-for="(item, i) in banner"
         :key="i"
@@ -24,8 +25,9 @@
         </v-container>
       </v-carousel-item>
     </v-carousel>
+ <!-- banner -->
 
-    <v-container >
+  <v-container >
    <v-row align-content="center" justify="center">
      <v-col cols="12" lg="12" xl="9" md="10">
        <v-card-title class="text-h4 text-center font-weight-light mb-xs-4"
@@ -48,7 +50,7 @@
             >
               <div class="d-flex flex-column justify-space-between fill-height">
                 <v-card-text>
-                  <v-btn color="#69AA3D"
+                  <v-btn color="primary"
                     ><v-icon class="mr-1">
                       mdi-map-marker-radius-outline </v-icon
                     >{{ servi.lugar }}</v-btn
@@ -57,9 +59,9 @@
 
                 <v-card-text>
                   <div class="d-flex align-center">
-                    <v-avatar color="accent" size="36">
+                    <!-- <v-avatar color="primary" size="36">
                       <v-icon dark>mdi-lan</v-icon>
-                    </v-avatar>
+                    </v-avatar> -->
 
                     <div
                       class="text-h5 py-3 pl-2 font-weight-bold"
@@ -141,7 +143,7 @@
                         style="border-radius: 16px"
                       >
                         <v-card-text>
-                          <v-btn color="accent" to="category"> {{noti.categoria.nombre}} </v-btn>
+                          <v-btn color="primary" to="category"> {{noti.categoria.nombre}} </v-btn>
                         </v-card-text>
                       </v-img>
 
@@ -170,6 +172,7 @@
 <script>
 export default {
   layout: 'homepage',
+   auth: false,
   beforeRouteEnter(to, from, next) {
     to.meta.title = 'INICIO'
     next()
@@ -182,38 +185,7 @@ export default {
     clientes: [],
     noticias: [],
     redes: [],
-    items: [
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-      },
-    ],
-
-    articles: [
-      {
-        src: 'https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
-        title: 'Mobile first & Responsive',
-        text: 'Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. Sed ornare ligula eget tortor tempor, quis porta tellus dictum.',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1475938476802-32a7e851dad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
-        title: 'Think outside the box',
-        text: 'Nam ut leo ipsum. Maecenas pretium aliquam feugiat. Aenean vel tempor est, vitae tincidunt risus. Sed sodales vestibulum nibh.',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1416339442236-8ceb164046f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1892&q=80',
-        title: 'Small changes, big difference',
-        text: 'Vestibulum in dictum velit, in rhoncus nibh. Maecenas neque libero, interdum a dignissim in, aliquet vitae lectus. Phasellus lorem enim, luctus ut velit eget.',
-      },
-    ],
+   
   }),
   computed:{
      footer(){

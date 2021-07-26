@@ -147,7 +147,7 @@ mounted() {
         let response = await this.crud('get', 'categorias/')
         this.category = response.data.data
       } catch (error) {
-        console.log(error.response.data, 'error')
+       // console.log(error.response.data, 'error')
       }
     },
   },

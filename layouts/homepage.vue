@@ -32,7 +32,7 @@ export default {
 
   head() {
       return {
-        title: this.info.titulo +' df',
+        title: this.info.titulo ,
         meta: [
           {
             hid: 'descripcion',
@@ -51,7 +51,7 @@ export default {
   methods: {
     async load() {
       try {
-        let response = await this.crud('get', '/web/1')
+        let response = await this.crud('get', '/inicio')
 
         this.info = response.data.data
 

@@ -49,7 +49,7 @@ export default {
   methods: {
     Menu() {
       let user = this.$auth.user.tipo_usuario;
-      console.log(user);
+     // console.log(user);
       switch (user) {
         case "UsuarioSutran":
           return (this.items = [

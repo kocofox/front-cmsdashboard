@@ -28,7 +28,7 @@
                     class="d-flex flex-column justify-space-between fill-height"
                   >
                     <v-card-text>
-                      <v-btn color="#69AA3D"
+                      <v-btn color="primary"
                         ><v-icon class="mr-1">
                           mdi-map-marker-radius-outline </v-icon
                         >{{ servi.lugar }}</v-btn
@@ -37,10 +37,6 @@
 
                     <v-card-text>
                       <div class="d-flex align-center">
-                        <v-avatar color="accent" size="36">
-                          <v-icon dark>mdi-lan</v-icon>
-                        </v-avatar>
-
                         <div
                           class="text-h5 py-3 pl-2 font-weight-bold"
                           style="line-height: 1.2"
@@ -70,6 +66,7 @@
 <script>
 export default {
   layout: 'homepage',
+  auth: false,
   data: () => ({
     servicios: [],
     pagination: {
@@ -87,7 +84,7 @@ export default {
       try {
         let response = await this.crud(
           'get',
-          '/servicios?page=' +
+          '/servicio?page=' +
             this.pagination.page +
             '&per_page=' +
             this.pagination.per_page

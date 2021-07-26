@@ -36,13 +36,13 @@
           <v-row>
             <v-col cols="12">
               <v-select
-                v-model="item.categorias_id"
+                v-model="item.categoria_id"
                 :items="category"
                 item-value="id"
                 item-text="nombre"
                 label="Seleccione una Categoría"
                 outlined
-                :error-messages="validate.categorias_id"
+                :error-messages="validate.categoria_id"
               ></v-select>
              
             </v-col>
@@ -138,7 +138,7 @@ export default {
         let response = await this.crud('get', 'categorias/')
         this.category = response.data.data
       } catch (error) {
-        console.log(error.response.data, 'error')
+       // console.log(error.response.data, 'error')
       }
     },
   },

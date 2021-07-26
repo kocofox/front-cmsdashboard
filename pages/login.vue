@@ -11,7 +11,7 @@
                 </v-avatar>
               </v-btn>
               <v-toolbar-title class="ml-0 pl-3">
-                <span class="hidden-sm-and-down">Telerutas</span>
+                <span class="hidden-sm-and-down">ESB NEGPRO</span>
               </v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>
@@ -104,11 +104,11 @@ export default {
     async userLogin() {
       this.loading = true; 
       try {
-        console.log('login')
+       // console.log('login')
         let response = await this.$auth.loginWith("local", {
           data: this.user,
         });
-        console.log(response)
+       // console.log(response)
         this.loading = false;
       } catch (err) {
         this.loading = false;
