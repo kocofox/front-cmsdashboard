@@ -4,7 +4,7 @@
       <h1
         class="display-2 font-weight-bold mb-3 mt-8 text-uppercase text-center"
       >
-        Noticias
+        Noticias 
       </h1>
 
       <v-responsive class="mx-auto mb-10" width="56">

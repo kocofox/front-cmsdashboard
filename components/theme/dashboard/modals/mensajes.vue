@@ -1,58 +1,38 @@
 <template>
   <v-form ref="form">
     <v-container>
-      <v-card class="mx-auto" outlined>
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="text-overline mb-4">{{ item.razonSocial }}</div>
-            <v-list-item-title class="text-h4 mb-1">
-              {{ item.asunto }}
-            </v-list-item-title>
-          </v-list-item-content>
+      <v-col>
+        <v-card class="mx-auto">
+          <v-alert text dense color="teal" icon="mdi-domain" border="left"
+            >Rasón Social:
+            {{ item.razonSocial }}
+            <v-icon>mdi-chevron-right</v-icon> Mail: {{ item.correo }}
+            <v-icon>mdi-chevron-right</v-icon>
+            <v-chip class="ma-2" color="red" outlined>
+              Telefono:
+              {{ item.telefono }}
+            </v-chip>
+          </v-alert>
 
-          <v-list-item-avatar tile size="80" > <v-icon x-large>mdi-email-outline</v-icon> </v-list-item-avatar>
-        </v-list-item>
-        <v-card-text class="text-h5 font-weight-bold text-justify">
-          {{ item.mensaje }}
-        </v-card-text>
-        <v-card-actions class="text-h5 font-weight-bold ">
-          <v-spacer></v-spacer>
-          <p >
-            {{ item.razonSocial }}  
-          </p>
-          <p>
-            - {{ item.correo }} -
-          </p>
-          <p>
-            {{ item.telefono }}
-          </p>
-        </v-card-actions>
-      </v-card>
+          <v-img
+            :src="item.imagen"
+          ></v-img>
+
+          <v-card-title> {{ item.asunto }}</v-card-title>
+
+          <v-card-subtitle> {{ item.mensaje }} </v-card-subtitle>
+        </v-card>
+      </v-col>
     </v-container>
   </v-form>
 </template>
 <script>
 export default {
-  components: {
-    'ckeditor-nuxt': () => {
-      if (process.client) {
-        return import('@blowstack/ckeditor-nuxt')
-      }
-    },
-  },
   props: ['item', 'validate'],
   data: () => ({
     banner: null,
     upbanner: null,
-    editorConfig: {
-      removePlugins: ['Title', 'Images'],
-      // simpleUpload: {
-      //   uploadUrl: 'path_to_image_controller',
-      //   headers: {
-      //     'Authorization': 'optional_token'
-      //   }
-      // }
-    },
+
     contentHolder: '',
     category: [],
   }),
@@ -76,10 +56,10 @@ export default {
     },
     async loadCategorias() {
       try {
-        let response = await this.crud('get', 'categorias/')
+        let response = await this.crud('get', 'categorias')
         this.category = response.data.data
       } catch (error) {
-       // console.log(error.response.data, 'error')
+        // console.log(error.response.data, 'error')
       }
     },
   },

@@ -22,7 +22,7 @@ export default {
       datos: {
         title: "Roles",
         view: 8,
-        route: "roles/",
+        route: "roles",
         headers: [
           { text: "Nombre", align: "start", sortable: false, value: "nombre" },
           { text: "Descripcion", value: "descripcion" },

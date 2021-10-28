@@ -25,14 +25,6 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              
-              <!-- <v-text-field
-                v-model="item.rol_id"
-                :error-messages="validate.rol_id"
-                label="Rol"
-                required
-                outlined
-              ></v-text-field> --> {{item.profiles_id}} 
                <v-select
                 v-model="item.profiles_id"
                 :items="category"
@@ -110,26 +102,12 @@
 </template>
 <script>
 export default {
-  components: {
-    'ckeditor-nuxt': () => {
-      if (process.client) {
-        return import('@blowstack/ckeditor-nuxt')
-      }
-    },
-  },
+  
   props: ['item', 'validate'],
   data: () => ({
     banner: null,
     upbanner: null,
-    editorConfig: {
-      removePlugins: ['Title', 'Images'],
-      // simpleUpload: {
-      //   uploadUrl: 'path_to_image_controller',
-      //   headers: {
-      //     'Authorization': 'optional_token'
-      //   }
-      // }
-    },
+    
     contentHolder: '',
     category:[]
   }),
@@ -153,7 +131,7 @@ mounted() {
     },
     async loadCategorias() {
       try {
-        let response = await this.crud('get', 'profiles/')
+        let response = await this.crud('get', 'roles')
         this.category = response.data.data
       } catch (error) {
        // console.log(error.response.data, 'error')

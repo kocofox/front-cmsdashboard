@@ -20,9 +20,9 @@ export default {
     return {
       enableMini: true,
       datos: {
-        title: "Slider",
+        title: "Crear Usuario",
         view: 6,
-        route: "usuarios/",
+        route: "usuarios",
         headers: [
           { text: "Nombres", align: "start", sortable: false, value: "name" },
           { text: "Apellidos", value: "fullname" },

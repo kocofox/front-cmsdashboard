@@ -94,26 +94,12 @@
 </template>
 <script>
 export default {
-  components: {
-    'ckeditor-nuxt': () => {
-      if (process.client) {
-        return import('@blowstack/ckeditor-nuxt')
-      }
-    },
-  },
+  
   props: ['item', 'validate'],
   data: () => ({
     banner: null,
     upbanner: null,
-    editorConfig: {
-      removePlugins: ['Title', 'Images'],
-      // simpleUpload: {
-      //   uploadUrl: 'path_to_image_controller',
-      //   headers: {
-      //     'Authorization': 'optional_token'
-      //   }
-      // }
-    },
+   
     contentHolder: '',
     category:[]
   }),
@@ -137,7 +123,7 @@ mounted() {
     },
     async loadCategorias() {
       try {
-        let response = await this.crud('get', 'categorias/')
+        let response = await this.crud('get', 'categorias')
         this.category = response.data.data
       } catch (error) {
         //console.log(error.response.data, 'error')

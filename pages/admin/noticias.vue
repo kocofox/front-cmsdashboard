@@ -22,7 +22,7 @@ export default {
       datos: {
         title: " Noticias",
         view: 3,
-        route: "noticias/",
+        route: "noticias",
         headers: [
           { text: "Título", align: "start", sortable: false, value: "titulo" },
           { text: "Imagen", value: "img" },

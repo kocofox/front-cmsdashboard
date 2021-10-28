@@ -7,7 +7,8 @@
     class="menu-navigation-drawer"
     v-model="enableMini"
   >
-    <v-list>
+  
+    <v-list >
       <v-list-item
         v-for="(item, i) in items"
         :key="i"

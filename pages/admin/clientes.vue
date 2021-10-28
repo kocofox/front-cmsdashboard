@@ -22,7 +22,7 @@ export default {
       datos: {
         title: "Clientes",
         view: 5,
-        route: "clientes/",
+        route: "clientes",
         headers: [
           { text: "Razon Social", align: "start", sortable: false, value: "razonSocial" },
           { text: "Teléfono", value: "telefono" },

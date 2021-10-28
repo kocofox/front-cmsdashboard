@@ -22,7 +22,7 @@ export default {
       datos: {
         title: "Servicios",
         view: 4,
-        route: "servicios/",
+        route: "servicios",
         headers: [
           { text: "Nombre", align: "start", sortable: false, value: "nombre" },
           { text: "Lugar", value: "lugar" },

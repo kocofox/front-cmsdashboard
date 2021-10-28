@@ -5,43 +5,62 @@
     :expand-on-hover="drawer"
     :mini-variant="drawer"
     class="menu-navigation-drawer"
-    
-  > 
+  >
     <v-list>
-      <v-list-item class="px-2">
-        <v-list-item-avatar>
-          <v-img src=""></v-img>
+      <v-list-item>
+        <v-list-item-avatar> <div class="text-center">
+
+          <v-avatar v-if="user.avatar" color="grey" size="64">
+            <img  :src="user.avatar" alt="John" />
+          </v-avatar   >
+          <v-avatar v-else >
+             <img  src="/person.png" alt="John" />
+          </v-avatar> </div>
         </v-list-item-avatar>
-        <v-list-item-title class="title text-h4">
-          ESB NEg
-        </v-list-item-title>
       </v-list-item>
-      <v-list-item
-        v-for="(item, i) in items"
-        :key="i"
-        :to="item.to"
-        router
-        exact
-      >
-        <v-list-item-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-action>
+
+      <v-list-item link>
         <v-list-item-content>
-          <v-list-item-title v-text="item.title" />
+          <v-list-item-title class="title"> {{user.fullname}} </v-list-item-title>
+          <v-list-item-subtitle>{{user.email}} </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
+    </v-list>
+
+    <v-divider></v-divider>
+    <v-list dense nav shaped>
+      <v-list-item-group v-model="selectedItem" color="primary">
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+          exact-active-class="primary--text"
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
 </template>
 <script>
 export default {
- 
   data() {
     return {
       items: [],
     }
   },
   computed: {
+    user() {
+      return this.$auth.user
+    },
+
     drawer: {
       get() {
         return this.$store.state.drawer
@@ -57,12 +76,11 @@ export default {
   methods: {
     Menu() {
       let user = this.$auth.user.profiles_id
-      
+
       switch (user) {
         case 1:
-         // console.log('admin')
+          // console.log('admin')
           return (this.items = [
-            
             //superadmin
             {
               icon: 'mdi-briefcase-outline',
@@ -91,15 +109,20 @@ export default {
               to: '/admin/servicios',
             },
             {
+              icon: 'mdi-tooltip-image-outline',
+              title: 'TRABAJOS',
+              to: '/admin/trabajos',
+            },
+            {
               icon: 'mdi-account-network-outline',
               title: 'CLIENTES',
               to: '/admin/clientes',
             },
-            {
-              icon: 'mdi-account-plus-outline',
-              title: 'ROLES',
-              to: '/admin/roles',
-            },
+            // {
+            //   icon: 'mdi-account-plus-outline',
+            //   title: 'ROLES',
+            //   to: '/admin/roles',
+            // },
             {
               icon: 'mdi-account-plus-outline',
               title: 'USUARIOS',
@@ -110,48 +133,38 @@ export default {
               title: 'MENSAJES',
               to: '/admin/mensajes',
             },
-            
-            
           ])
           break
         case '2':
           return (this.items = [
-            // Administrador – Sutran y sub usuario
-
-            // {
-            //   icon: "mdi-card-account-details-outline",
-            //   title: "TRANSPORTISTAS",
-            //   to: "transportistas",
-            // },
+           
             {
-              icon: 'mdi-account-multiple-plus-outline',
-              title: 'USUARIOS TRANSPORTISTA',
-              to: 'usertransportista',
+              icon: 'mdi-tooltip-image-outline',
+              title: 'BANNERS',
+              to: '/admin/banner',
             },
             {
-              icon: 'mdi-rv-truck',
-              title: 'VEHICULOS',
-              to: 'vehiculos',
+              icon: 'mdi-tooltip-image-outline',
+              title: 'CATEGORIAS',
+              to: '/admin/categorias',
             },
-            // {
-            //   icon: " mdi-routes-clock",
-            //   title: "RUTAS",
-            //   to: "rutas",
-            // },
-            // {
-            //   icon: "mdi-google-maps",
-            //   title: "PUNTOS DE CONTROL",
-            //   to: "puntoscontrol",
-            // },
-            // {
-            //   icon: "mdi-alert-circle-outline",
-            //   title: "Incidencias (SUTRAN)",
-            //   to: "incidenciasmonitoreo",
-            // },
+           
             {
-              icon: 'mdi-alert-circle-outline',
-              title: 'Incidencias (TRANSPORTISTAS)',
-              to: 'incidenciastransportistas',
+              icon: 'mdi-account-group-outline',
+              title: 'SERVICIOS',
+              to: '/admin/servicios',
+            },
+            {
+              icon: 'mdi-account-network-outline',
+              title: 'CLIENTES',
+              to: '/admin/clientes',
+            },
+          
+           
+            {
+              icon: ' mdi-email-outline',
+              title: 'MENSAJES',
+              to: '/admin/mensajes',
             },
           ])
           break
@@ -163,91 +176,7 @@ export default {
           break
       }
     },
-    selector() {
-      let user = this.$auth.user
-      // console.log(user);
-
-      this.items = [
-        //superadmin
-        {
-          icon: 'mdi-account-tie',
-          title: 'USUARIOS SUTRAN',
-          to: 'usersutran',
-        },
-
-        // Administrador – Sutran y sub usuario
-        {
-          icon: 'mdi-account-multiple-plus-outline',
-          title: 'USUARIOS TRANSPORTISTA',
-          to: 'usertransportista',
-        },
-        {
-          icon: 'mdi-card-account-details-outline',
-          title: 'TRANSPORTISTAS',
-          to: 'transportistas',
-        },
-        {
-          icon: 'mdi-rv-truck',
-          title: 'VEHICULOS',
-          to: 'vehiculos',
-        },
-        {
-          icon: ' mdi-routes-clock',
-          title: 'RUTAS',
-          to: 'rutas',
-        },
-        {
-          icon: 'mdi-google-maps',
-          title: 'PUNTOS DE CONTROL',
-          to: 'puntoscontrol',
-        },
-        {
-          icon: 'mdi-alert-circle-outline',
-          title: 'Incidencias (SUTRAN)',
-          to: 'incidenciasmonitoreo',
-        },
-        {
-          icon: 'mdi-alert-circle-outline',
-          title: 'Incidencias (TRANSPORTISTAS)',
-          to: 'incidenciastransportistas',
-        },
-
-        // {
-        //   icon: "mdi-map-marker-multiple",
-        //   title: "Rubros de Stand",
-        //   to: "/rubrostands"
-        // },
-
-        // {
-        //   icon: "mdi-text-box-outline",
-        //   title: "Facturación",
-        //   to: "/admin/voucher"
-        // },
-        // {
-        //   icon: "mdi-brightness-7",
-        //   title: "Administracion",
-        //   to: "/user/administration"
-        // }
-
-        {
-          icon: 'mdi-cart',
-          title: 'Productos',
-          to: '/admin/products',
-          items: [],
-        },
-        {
-          icon: 'mdi-clipboard-account-outline',
-          title: 'Cuenta',
-          to: '/admin/user',
-          items: [],
-        },
-        // {
-        //   icon: "mdi-apps",
-        //   title: "Categorias",
-        //   to: "/categories"
-        // }
-      ]
-    },
+   
   },
 }
 </script>

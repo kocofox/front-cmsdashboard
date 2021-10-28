@@ -42,7 +42,7 @@ export default {
 </script>
 <style scoped>
 .main-content {
-  background-color: #f0f2f5;
+  background-color: #F6F7FF;
   padding-top: 86px !important;
 }
 .height-100pc {

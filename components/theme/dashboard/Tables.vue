@@ -1,6 +1,6 @@
 <template>
-  <div  class="height-100pc">
-    <v-card class="py-2 height-100pc crud-card"  elevation="1" >
+  <div class="height-100pc">
+    <v-card class="py-2 height-100pc crud-card" elevation="1">
       <v-data-table
         class="crud-table elevation-0"
         fixed-header
@@ -10,7 +10,7 @@
         loading-text="Cargando... Por favor espere..."
         :options.sync="options"
         :server-items-length="pageCount"
-        hide-default-footer 
+        hide-default-footer
         id="uno"
       >
         <template v-slot:top>
@@ -23,9 +23,7 @@
                 medium
                 outlined
                 @click.stop="newItem"
-                ><v-icon dark>
-        mdi-plus
-      </v-icon> Nuevo 
+                ><v-icon dark> mdi-plus </v-icon> Nuevo
               </v-btn>
             </v-col>
           </v-row>
@@ -47,7 +45,7 @@
             <v-btn v-if="info.view != 7" @click.stop="Edit(item)">
               <v-icon large>mdi-pencil-outline</v-icon>
             </v-btn>
-             <v-btn v-if="info.view == 7" @click.stop="Edit(item)">
+            <v-btn v-if="info.view == 7" @click.stop="Edit(item)">
               <v-icon large>mdi-television</v-icon>
             </v-btn>
             <v-btn @click.stop="deleteItem(item)">
@@ -56,15 +54,15 @@
           </v-btn-toggle>
         </template>
       </v-data-table>
-     <v-row
+      <v-row
         justify="end"
         no-gutters
         class="mb-n3 mr-5 mt-4 crud-table-pagination"
         v-if="total > 1"
       >
         <!-- <v-col md="auto"> -->
-         <v-pagination
-         class="pa-2 page-selection v-size--small"
+        <v-pagination
+          class="pa-2 page-selection v-size--small"
           v-model="pagination.page"
           :length="total"
           @input="load()"
@@ -82,27 +80,11 @@
           />
         </v-col> -->
       </v-row>
-      <v-navigation-drawer
-        absolute
-        scrollable
-        temporary
-        v-model="drawer"
-        :style="{ top: `${scrollTop}px` }"
-        width="100%"
-        class="nav-form elevation-0"
-        :height="navigationHeight"
-         id="dos"
-      >
+      <v-navigation-drawer scrollable v-model="drawer" absolute temporary width="100%">
         <v-container fluid id="tres">
-          <v-row  >
+          <v-row>
             <v-col>
-              <v-card
-                flat
-                class="overflow-y-auto"
-                height="auto"
-                 id="cuatro"
-
-              >
+              <v-card flat class="overflow-y-auto" height="auto" id="cuatro">
                 <v-card-title>
                   <span class="headline">{{ info.title }}</span>
                 </v-card-title>
@@ -159,6 +141,11 @@
                     :validate="warning"
                     v-if="info.view == 8"
                   />
+                  <trabajos
+                    :item="item"
+                    :validate="warning"
+                    v-if="info.view == 9"
+                  />
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -204,6 +191,7 @@ import banner from '~/components/theme/dashboard/modals/banner'
 import categoria from '~/components/theme/dashboard/modals/categorias'
 import noticias from '~/components/theme/dashboard/modals/noticias'
 import servicios from '~/components/theme/dashboard/modals/servicios'
+import trabajos from '~/components/theme/dashboard/modals/trabajos'
 import clientes from '~/components/theme/dashboard/modals/clientes'
 import usuarios from '~/components/theme/dashboard/modals/usuarios'
 import mensajes from '~/components/theme/dashboard/modals/mensajes'
@@ -220,6 +208,7 @@ export default {
     usuarios,
     mensajes,
     roles,
+    trabajos,
   },
   data() {
     return {
@@ -247,11 +236,11 @@ export default {
       addSave: '',
       scrollTop: 0,
       navigationHeight: 'auto',
-       pagination: {
-      per_page: 10,
-      page: 1,
-    },
-    total: null,
+      pagination: {
+        per_page: 10,
+        page: 1,
+      },
+      total: null,
     }
   },
   watch: {
@@ -267,18 +256,22 @@ export default {
   },
 
   methods: {
-    onScroll (e) {
-        this.scrollTop = e.target.scrollTop
-      },
+    onScroll(e) {
+      this.scrollTop = e.target.scrollTop
+    },
     async load() {
       this.item = {}
       this.addSave = ''
       this.isBusy = true
       try {
-        let response = await this.crud('get', this.info.route + '/?page=' +
+        let response = await this.crud(
+          'get',
+          this.info.route +
+            '?page=' +
             this.pagination.page +
             '&per_page=' +
-            this.pagination.per_page)
+            this.pagination.per_page
+        )
 
         this.datos = response.data.data
         this.pageCount = response.data.count
@@ -308,23 +301,33 @@ export default {
       Object.entries(datos).forEach(([key, value]) => {
         if (value instanceof File) {
           formData.append(key, value || null)
-         // console.log(key, value, 'file')
+
+          //console.log(key, value, 'file')
         } else if (typeof value === 'object' && value) {
-          formData.append(key, JSON.stringify(value) || null)
+          if (key === 'images') {
+            for (const i of Object.keys(value)) {
+              formData.append('images[]', value[i] || null)
+            }
+
+            // formData.append('images[]', value || null)
+          } else {
+            formData.append(key, JSON.stringify(value) || null)
+          }
+
           //console.log(key, JSON.stringify(value), 'obj')
         } else if (Array.isArray(value)) {
           formData.append(key, JSON.stringify(value) || null)
-          //console.log(key, JSON.stringify(value), 'array')
+          // console.log(key, JSON.stringify(value), 'array')
         } else {
           formData.append(key, value || null)
-         // console.log(key, value, 'otros')
+          // console.log(key, value, 'otros')
         }
       })
       if (this.addSave == 'Edit') {
-        //console.log('eeeee')
-        ruta = this.info.route + this.item.id
+        ruta = this.info.route + "/" + this.item.id
         formData.append('_method', 'PUT')
       }
+      console.log(formData, 'fd')
 
       try {
         let response = await this.crud('POST', ruta, formData)
@@ -383,11 +386,11 @@ export default {
       }
     },
     handleScroll() {
-     // console.log(document.body.clientHeight)
-      var uno = document.getElementById("uno");
-      var dos = document.getElementById("dos");
-      var tres = document.getElementById("tres");
-       var cuatro = document.getElementById("cuatro");
+      // console.log(document.body.clientHeight)
+      var uno = document.getElementById('uno')
+      var dos = document.getElementById('dos')
+      var tres = document.getElementById('tres')
+      var cuatro = document.getElementById('cuatro')
       //console.log(uno.clientHeight,dos.clientHeight,tres.clientHeight,cuatro.clientHeight, 'datos')
       const scrollTop =
         window.pageYOffset ||
@@ -398,17 +401,17 @@ export default {
       } else {
         this.scrollTop = 0
       }
-     this.navigationHeight = document.body.scrollHeight - this.scrollTop - 80
-     // console.log(this.navigationHeight, 'ver', this.scrollTop, document.body.scrollHeight)
+      this.navigationHeight = document.body.scrollHeight - this.scrollTop - 80
+      // console.log(this.navigationHeight, 'ver', this.scrollTop, document.body.scrollHeight)
     },
   },
 }
 </script>
 <style >
 .height-100pc {
-    height: 100%!important;
+  height: 100% !important;
 }
-.v-navigation-drawer__content {
+.v-dialog__content {
   height: 85%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -552,5 +555,4 @@ body >>> .v-data-table__checkbox .mdi-checkbox-marked {
 .nav-form {
   z-index: 99;
 }
-
 </style>

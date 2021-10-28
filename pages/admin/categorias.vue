@@ -22,7 +22,7 @@ export default {
       datos: {
         title: "Categoría",
         view: 2,
-        route: "categorias/",
+        route: "categorias",
         headers: [
           { text: "Nombre", align: "start", sortable: false, value: "nombre" },
           { text: "Descripcion", value: "descripcion" },

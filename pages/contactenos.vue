@@ -16,8 +16,8 @@
         Muchas gracias por su interés en nuestra empresa y nuestros servicios,
         si tiene alguna pregunta, ¡escríbanos un mensaje ahora!
       </h4>
-      <v-row class="mt-8">
-        <v-col cols="12" sm="4">
+      <v-row class="mt-8" justify="center">
+        <v-col cols="12" sm="3">
           <v-responsive class="d-none d-sm-flex">
             <iframe
               width="100%"
@@ -30,10 +30,10 @@
             ></iframe>
           </v-responsive>
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="5">
           <v-card flat>
             <v-row dense>
-              <v-col cols="12" sm="8">
+              <v-col cols="12" sm="7">
                 <v-text-field
                   v-model="mensaje.razonSocial"
                   :error-messages="warning.razonSocial"
@@ -46,7 +46,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="4">
+              <v-col cols="12" sm="5">
                 <v-text-field
                   v-model="mensaje.ruc"
                   :error-messages="warning.ruc"
@@ -111,6 +111,15 @@
                   rows="3"
                 ></v-textarea>
               </v-col>
+              <v-col cols="12">
+                <v-file-input
+                 @change="onFileChange"
+                  label="Adjuntar imagen o dibujo de referencia "
+                  outlined
+                  dense
+                  accept="image/*"
+                ></v-file-input>
+              </v-col>
               <v-col>
                 <div class="text-right mt-4 mb-8">
                   <v-btn
@@ -152,7 +161,7 @@
 <script>
 export default {
   layout: 'homepage',
-   auth: false,
+  auth: false,
   data: () => ({
     mensaje: {},
     alert: {
@@ -166,7 +175,7 @@ export default {
   }),
   head() {
     return {
-      title: "Contáctenos",
+      title: 'Contáctenos',
       meta: [
         {
           hid: 'descripcion',
@@ -179,19 +188,46 @@ export default {
     }
   },
   methods: {
+     onFileChange(evt) {
+       console.log(evt)
+      //let imglogo = evt.target.files[0]
+      this.mensaje.imagen = evt.target.files[0]
+     
+    },
     async send() {
       this.loading = true
-      let route = '/contactos'
-      let data = this.mensaje
+      let route = '/mensajes'
+      let datos = this.mensaje
+
+      const formData = new FormData()
+      Object.entries(datos).forEach(([key, value]) => {
+        if (value instanceof File) {
+          formData.append(key, value || null)
+          // console.log(key, value, 'file')
+        } else if (typeof value === 'object' && value) {
+          formData.append(key, JSON.stringify(value) || null)
+          //console.log(key, JSON.stringify(value), 'obj')
+        } else if (Array.isArray(value)) {
+          formData.append(key, JSON.stringify(value) || null)
+          //console.log(key, JSON.stringify(value), 'array')
+        } else {
+          formData.append(key, value || null)
+          console.log(key, value, 'otros')
+        }
+      })
+      console.log(formData)
+      
       try {
-        let response = await this.crud('post', route, data)
+        let response = await this.crud('post', route, formData)
         this.alert.active = true
         this.alert.type = 'success'
         this.alert.text = response.data.msg
 
         this.item = {}
         this.loading = false
+        this.mensaje = {}
       } catch (error) {
+        this.loading = false
         this.alert.active = true
         this.alert.text = error.response.data.message
         this.alert.type = 'warning'

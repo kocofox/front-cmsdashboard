@@ -17,20 +17,20 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
-    
+
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-   
+
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/back',
- 
+
     '~/plugins/vuex-persist',
-    
+    { src: '~/plugins/TiptapVuetify', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,28 +46,39 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
+    
     baseURL: process.env.API_URL,
+   
   },
+ 
 
   // login auth module
   auth: {
 
     strategies: {
       local: {
-
-        endpoints: {
-          login: { url: 'login/', method: 'post', propertyName: 'token' },
-          logout: false,
-         // logout: { url: 'token/logout', method: 'post' },
-          user: { url: 'user/', method: 'post', propertyName: 'user' },
-            //user: false
+        token: {
+          property: 'token',
+          maxAge: 3600
         },
-        tokenType: 'Token',
+        user: {
+          property: 'user',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: 'login', method: 'post', propertyName: "token" },
+          logout: false,
+          // logout: { url: 'token/logout', method: 'post' },
+          user: { url: 'user', method: 'post', propertyName: '' },
+          //user: false
+        },
+        
         tokenRequired: true,
 
       }
@@ -104,5 +115,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vuetify/lib', "tiptap-vuetify"]
   }
 }

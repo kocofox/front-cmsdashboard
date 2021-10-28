@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-system-bar color="#31A2C7" dark>
+    <v-system-bar color="#1f425d" dark>
       <v-spacer></v-spacer>
 
       <v-btn text to="/admin"> <v-icon>mdi-lock</v-icon></v-btn>
     </v-system-bar>
-    <v-app-bar height="100" color="#1f425d" dark>
+    <v-app-bar height="100" color="white" dark>
       <v-app-bar-nav-icon
         class="d-flex d-sm-none"
         @click="toggle"
@@ -20,8 +20,9 @@
         v-for="(link, i) in items"
         :key="i"
         text
-        class="white--text hidden-sm-and-down"
+        class="hidden-sm-and-down"
         :to="link.path"
+        color="#1f425d"
       >
         <v-icon class="mr-1">{{ link.icon }}</v-icon>
         {{ link.title }}
@@ -75,11 +76,11 @@ export default {
     return {
       collapse: false,
       items: [
-        { title: 'Inicio', icon: 'mdi-home', path: '/' },
-        { title: 'Nosotros', icon: 'mdi-account-group', path: '/nosotros' },
-        { title: 'Servicios', icon: 'mdi-lan', path: '/servicios' },
-        { title: 'Noticias', icon: 'mdi-newspaper', path: '/noticias' },
-        { title: 'Contactenos', icon: 'mdi-email-send', path: '/contactenos' },
+        { title: 'Inicio',  path: '/' },
+        { title: 'Nosotros',  path: '/nosotros' },
+        { title: 'Trabajos Realizados',  path: '/trabajos' },
+        { title: 'Servicios',  path: '/servicios' },
+        { title: 'Contactenos',  path: '/contactenos' },
       ],
       mini: false,
     }

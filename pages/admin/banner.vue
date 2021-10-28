@@ -22,7 +22,7 @@ export default {
       datos: {
         title: "Slider",
         view: 1,
-        route: "banner/",
+        route: "banner",
         headers: [
           { text: "nombre", align: "start", sortable: false, value: "alt" },
           { text: "Imagen", value: "url" },

@@ -1,368 +1,390 @@
 <template>
-  <div class="height-100pc">
-    <v-card class="py-2 height-100pc crud-card" elevation="1">
-      <v-stepper v-model="e1">
-        <v-stepper-header>
-          <v-stepper-step :complete="e1 > 1" editable step="1">
-            Información Básica
-          </v-stepper-step>
+  <client-only placeholder="Loading...">
+    <div class="height-100pc">
+      <v-skeleton-loader v-if="isBusy" type="date-picker"></v-skeleton-loader>
 
-          <v-divider></v-divider>
+      <v-card v-else class="py-2 height-100pc crud-card" elevation="1">
+        <v-stepper v-model="e1">
+          <v-stepper-header>
+            <v-stepper-step :complete="e1 > 1" editable step="1">
+              Información Básica
+            </v-stepper-step>
 
-          <v-stepper-step :complete="e1 > 2" editable step="2">
-            Nosotros
-          </v-stepper-step>
+            <v-divider></v-divider>
 
-          <v-divider></v-divider>
+            <v-stepper-step :complete="e1 > 2" editable step="2">
+              Nosotros
+            </v-stepper-step>
 
-          <v-stepper-step step="3" editable> Redes Sociales </v-stepper-step>
-        </v-stepper-header>
+            <v-divider></v-divider>
 
-        <v-stepper-items>
-          <v-stepper-content step="1" class="pa-2">
-            <v-row>
-              <v-col cols="12" sm="7">
-                <v-row
-                  ><v-col cols="12">
-                    <v-card color="#E3F2FD" flat>
-                      <v-card-title> Título </v-card-title>
-                      <v-card-text>
-                        <v-text-field
-                          dense
-                          v-model="empresa.titulo"
-                          :error-messages="validate.titulo"
-                          persistent-placeholder
-                          outlined
-                          
-                          required
-                          hint="5 y 70 caracteres"
-                          persistent-hint
-                        ></v-text-field>
-                      </v-card-text>
-                    </v-card> </v-col
-                  ><v-col cols="12">
-                    <v-row>
-                      <v-col cols="12">
-                        <v-card color="#EDE7F6" height="100%">
-                          <v-card-title> Descripción </v-card-title>
-                          <v-card-text>
-                            <v-textarea
-                              v-model="empresa.descripcion"
-                              :error-messages="validate.descripcion"
-                              label=""
-                              persistent-placeholder
-                              outlined
-                              
-                              required
-                              hint="150 y 250 caracteres"
-                              persistent-hint
-                              prepend-icon="mdi-comment"
-                              counter="250"
-                              rows="2"
-                              dense
-                            ></v-textarea>
-                          </v-card-text>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="5">
-                <v-row>
-                  <v-col cols="12">
-                    <v-card color="#E0F2F1">
-                      <v-card-title> Imágenes </v-card-title>
-                      <v-card-text>
-                        <v-row>
-                          <v-col cols="12" sm="6">
-                            <v-card class="mt-4" width="250">
-                              <v-card-title> logo </v-card-title>
-                              <v-divider class="mx-1"></v-divider>
-                              <div class="image-upload mt-2">
-                                <label for="file-logo">
-                                  <img
-                                    v-if="logo"
-                                    :src="logo"
-                                    alt=""
-                                    class="preview"
-                                  />
-                                  <img
-                                    v-else
-                                    :src="empresa.logo"
-                                    class="preview"
-                                  />
-                                </label>
-                                <!-- <v-file-input
-                                  v-model="uplogo"
-                                  @change="onFileChange"
-                                  id="file-input"
-                                  hide-input
-                                  label="Avatar"
-                                  prepend-icon=""
-                                ></v-file-input> -->
-                                <input
-                                  id="file-logo"
-                                  type="file"
-                                  accept="image/*"
-                                  @change="onFileChange"
-                                  name="images"
-                                /><v-card-actions>
-                                  <v-spacer></v-spacer>
-                                  <v-btn icon @click="imglogo()">
-                                    <v-icon dark right
-                                      >mdi-content-save-outline</v-icon
-                                    >
-                                    Agregar </v-btn
-                                  ><v-spacer></v-spacer>
-                                </v-card-actions>
-                              </div>
-                            </v-card>
-                          </v-col>
-                          <v-col cols="12" sm="6"
-                            ><v-card class="mt-4" width="250">
-                              <v-card-title> Favicon </v-card-title>
-                              <v-divider class="mx-1"></v-divider>
-                              <div class="image-upload mt-2">
-                                <label for="file-favi">
-                                  <img
-                                    v-if="Favi"
-                                    :src="Favi"
-                                    alt=""
-                                    class="preview"
-                                  />
-                                  <img
-                                    v-else
-                                    :src="empresa.favicon"
-                                    class="preview"
-                                  />
-                                </label>
-                                <!-- <v-file-input
-                                  v-model="upFavi"
-                                  @change="onFileChangef"
-                                  id="file-inputf"
-                                  hide-input
-                                  label="Avatar"
-                                  prepend-icon=""
-                                ></v-file-input> -->
-                                <input
-                                  id="file-favi"
-                                  type="file"
-                                  accept="image/*"
-                                  @change="onFileChangef"
-                                  name="imagesd"
+            <v-stepper-step step="3" editable> Redes Sociales </v-stepper-step>
+          </v-stepper-header>
+
+          <v-stepper-items>
+            <v-stepper-content step="1" class="pa-2">
+              <v-row>
+                <v-col cols="12" sm="6">
+                  <v-row
+                    ><v-col cols="12">
+                      <v-card color="#E3F2FD" class="mx-1 mb-1" flat>
+                        <v-card-title class="pa-6 pb-3"> Título </v-card-title>
+                        <v-card-text>
+                          <v-text-field
+                            dense
+                            v-model="empresa.titulo"
+                            :error-messages="validate.titulo"
+                            persistent-placeholder
+                            outlined
+                            required
+                            hint="5 y 70 caracteres"
+                            persistent-hint
+                          ></v-text-field>
+                        </v-card-text>
+                      </v-card> </v-col
+                    ><v-col cols="12">
+                      <v-row>
+                        <v-col cols="12">
+                          <v-card color="#EDE7F6" class="mx-1 mb-1">
+                            <v-card-title class="pa-6 pb-3">
+                              Descripción
+                            </v-card-title>
+                            <v-card-text>
+                              <v-textarea
+                                v-model="empresa.descripcion"
+                                :error-messages="validate.descripcion"
+                                label=""
+                                persistent-placeholder
+                                outlined
+                                required
+                                hint="150 y 250 caracteres"
+                                persistent-hint
+                                prepend-icon="mdi-comment"
+                                counter="250"
+                                rows="2"
+                                dense
+                              ></v-textarea>
+                            </v-card-text>
+                          </v-card>
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-row>
+                    <v-col cols="12">
+                      <v-card color="#E0F2F1">
+                        <v-card-title> Imágenes </v-card-title>
+                        <v-card-text>
+                          <v-row>
+                            <v-col cols="12" sm="6">
+                              <v-card class="mt-1" width="250">
+                                <v-card-title>logo</v-card-title>
+
+                                <v-divider class="mx-2"></v-divider>
+                                <cargadorimg
+                                  :dtos="empresa.logo"
+                                  :type="type"
+                                  @imgus="imagenLogo"
                                 />
-                              </div>
-                              <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn icon @click="imgfavi()">
-                                  <v-icon dark right
-                                    >mdi-content-save-outline</v-icon
-                                  >
-                                  Agregar </v-btn
-                                ><v-spacer></v-spacer>
-                              </v-card-actions>
-                            </v-card>
-                          </v-col>
-                        </v-row>
-                      </v-card-text>
-                    </v-card>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <v-card color="#FFF3E0" height="100%">
-                  <v-card-title> Footer </v-card-title>
-                  <v-card-text>
-                    <v-row>
-                      <v-col>
-                        <v-text-field
-                          v-model="footer.numero"
-                          :error-messages="validate.titulo"
-                          persistent-placeholder
-                          outlined
-                          clearable
-                          
-                          required
-                          hint="5 y 70 caracteres"
-                          persistent-hint
-                          label="Número"
-                          dense
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-text-field
+                              </v-card>
+                            </v-col>
+                            <v-col cols="12" sm="6"
+                              ><v-card class="mt-1" width="250">
+                                <v-card-title> Favicon </v-card-title>
+                                <v-divider class="mx-1"></v-divider>
+                                <cargadorimg
+                                  :dtos="empresa.favicon"
+                                  :type="type"
+                                  @imgus="imagenFavi"
+                                />
+                              </v-card>
+                            </v-col>
+                          </v-row>
+                        </v-card-text>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12">
+                  <v-card color="#FFF3E0" height="100%">
+                    <!-- <v-card-title> Footer </v-card-title> -->
+                    <v-card-text>
+                      <v-row>
+                        <v-col>
+                          <span class="text-h6"> Número </span>
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="footer.numero"
+                              :extensions="extensions"
+                            />
+
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                        <v-col
+                          ><span class="text-h6"> Dirección </span>
+                          <!-- <v-text-field
                           v-model="footer.direccion"
                           :error-messages="validate.titulo"
                           persistent-placeholder
                           outlined
                           clearable
-                          
                           required
                           hint="5 y 70 caracteres"
                           persistent-hint
                           label="Dirección"
                           dense
-                        ></v-text-field>
-                      </v-col>
-                      <v-col>
-                        <v-text-field
+                        ></v-text-field> -->
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="footer.direccion"
+                              :extensions="extensions"
+                            />
+
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                        <v-col>
+                          <span class="text-h6"> Correos </span>
+                          <!-- <v-text-field
                           v-model="footer.correo"
                           :error-messages="validate.titulo"
                           persistent-placeholder
                           outlined
                           clearable
-                          
                           required
                           hint="5 y 70 caracteres"
                           persistent-hint
                           label="Correos"
                           dense
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
+                        ></v-text-field> -->
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="footer.correo"
+                              :extensions="extensions"
+                            />
 
-            <div class="text-right mt-4">
-              <v-btn color="primary" @click="e1 = 2"> continuar </v-btn>
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
 
-              <v-btn text> Cancelar </v-btn>
-            </div>
-          </v-stepper-content>
+              <div class="text-right mt-4">
+                <v-btn color="primary" @click="e1 = 2"> continuar </v-btn>
 
-          <v-stepper-content step="2">
-            <v-row>
-              <v-col cols="12">
-                <v-card color="#E0F2F1">
-                  <v-card-title> Nosotros </v-card-title>
-                  <v-card-text>
-                    <v-textarea
-                      v-model="empresa.nosotros"
-                      :error-messages="validate.descripcion"
-                      persistent-placeholder
-                      outlined
-                      clearable
-                      rounded
-                      required
-                      hint="150 y 250 caracteres"
-                      persistent-hint
-                      prepend-icon="mdi-comment"
-                      counter="250"
-                    ></v-textarea> </v-card-text
-                ></v-card>
-              </v-col>
-              <v-col cols="12">
-                <v-card color="#E8EAF6">
-                  <v-card-title> Misión </v-card-title>
-                  <v-card-text>
-                    <v-textarea
-                      v-model="empresa.mision"
-                      :error-messages="validate.descripcion"
-                      persistent-placeholder
-                      outlined
-                      clearable
-                      rounded
-                      required
-                      hint="150 y 250 caracteres"
-                      persistent-hint
-                      prepend-icon="mdi-comment"
-                      counter="250"
-                    ></v-textarea>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-              <v-col cols="12">
-                <v-card color="#E8F5E">
-                  <v-card-title> Visión </v-card-title>
-                  <v-card-text>
-                    <v-textarea
-                      v-model="empresa.vision"
-                      :error-messages="validate.descripcion"
-                      persistent-placeholder
-                      outlined
-                      clearable
-                      rounded
-                      required
-                      hint="150 y 250 caracteres"
-                      persistent-hint
-                      prepend-icon="mdi-comment"
-                      counter="250"
-                    ></v-textarea
-                  ></v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
+                <v-btn text> Cancelar </v-btn>
+              </div>
+            </v-stepper-content>
 
-            <div class="text-right mt-4">
-              <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
+            <v-stepper-content step="2">
+              <v-row>
+                <v-col cols="12">
+                  <v-card color="#E0F2F1">
+                    <v-card-title> Nosotros </v-card-title>
+                    <v-container>
+                      <v-row>
+                        <v-col>
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="etiquetas.nosotros"
+                              :extensions="extensions"
+                            />
 
-              <v-btn text> Cancel </v-btn>
-            </div>
-          </v-stepper-content>
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12">
+                  <v-card color="#E8EAF6">
+                    <v-card-title> Misión </v-card-title>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="9">
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="etiquetas.mision"
+                              :extensions="extensions"
+                            />
 
-          <v-stepper-content step="3">
-            <v-row>
-              <v-col cols="12">
-                <v-card>
-                  <v-card-title> Redes Sociales </v-card-title>
-                  <v-card-text>
-                    <v-row class="mt-8">
-                      <v-col
-                        v-for="(icon, index) in empresa.redes"
-                        :key="icon.nombre"
-                        cols="12"
-                        sm="6"
-                        md="6"
-                      >
-                        <v-text-field
-                          :prepend-inner-icon="icon.icono"
-                          v-model="empresa.redes[index].link"
-                          outlined
-                          :label="icon.nombre"
-                          :color="icon.color"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                        <v-col cols="3">
+                          <div v-if="etiquetas.mision">
+                            <cargadorimg
+                              :dtos="etiquetas.mision"
+                              :type="type"
+                              @imgus="imagenMi"
+                            />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12">
+                  <v-card color="#B3E5FC">
+                    <v-card-title> Visión </v-card-title>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="9">
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="etiquetas.vision"
+                              :extensions="extensions"
+                            />
 
-            <div class="text-right mt-4">
-              <v-btn color="primary" @click="save"> Guardar </v-btn>
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                        <v-col cols="3">
+                          <div v-if="etiquetas.vision">
+                            <cargadorimg
+                              :dtos="etiquetas.vision"
+                              :type="type"
+                              @imgus="imagenVi"
+                            />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12">
+                  <v-card color="#CFD8DC">
+                    <v-card-title> Historia </v-card-title>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="9">
+                          <ClientOnly>
+                            <!-- Use the component in the right place of the template -->
+                            <tiptap-vuetify
+                              v-model="etiquetas.historia"
+                              :extensions="extensions"
+                            />
 
-              <v-btn text> Salir </v-btn>
-            </div>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
-    </v-card>
+                            <template #placeholder> Loading... </template>
+                          </ClientOnly>
+                        </v-col>
+                        <v-col cols="3">
+                          <div v-if="etiquetas.nosotros">
+                            <cargadorimg
+                              :dtos="etiquetas.nosotros"
+                              :type="type"
+                              @imgus="imagenUS"
+                            />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+              </v-row>
 
-    <v-snackbar
-      v-model="alert.active"
-      :timeout="timeout"
-      :color="alert.type"
-      bottom
-      right
-      text
-    >
-      {{ alert.text }}
+              <div class="text-right mt-4">
+                <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
 
-      <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="alert.active = false">
-          Cerrar
-        </v-btn>
-      </template>
-    </v-snackbar>
-  </div>
+                <v-btn text> Cancel </v-btn>
+              </div>
+            </v-stepper-content>
+
+            <v-stepper-content step="3">
+              <v-row>
+                <v-col cols="12">
+                  <v-card>
+                    <v-card-title> Redes Sociales </v-card-title>
+                    <v-card-text>
+                      <v-row class="mt-8">
+                        <v-col
+                          v-for="(icon, index) in empresa.redes"
+                          :key="icon.nombre"
+                          cols="12"
+                          sm="6"
+                          md="6"
+                        >
+                          <v-text-field
+                            :prepend-inner-icon="icon.icono"
+                            v-model="empresa.redes[index].link"
+                            outlined
+                            :label="icon.nombre"
+                            :color="icon.color"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+
+              <div class="text-right mt-4">
+                <v-btn color="primary" @click="save"> Guardar </v-btn>
+
+                <v-btn text> Salir </v-btn>
+              </div>
+            </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
+      </v-card>
+
+      <v-snackbar
+        v-model="alert.active"
+        :timeout="timeout"
+        :color="alert.type"
+        bottom
+        right
+        text
+      >
+        {{ alert.text }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="blue" text v-bind="attrs" @click="alert.active = false">
+            Cerrar
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
+  </client-only>
 </template>
 <script>
+import cargadorimg from '~/components/theme/dashboard/img'
+import {
+  TiptapVuetify,
+  Heading,
+  Bold,
+  Italic,
+  Strike,
+  Underline,
+  Paragraph,
+  BulletList,
+  OrderedList,
+  ListItem,
+  Link,
+  Blockquote,
+  HardBreak,
+  HorizontalRule,
+} from 'tiptap-vuetify'
 export default {
+  components: {
+    TiptapVuetify,
+    cargadorimg,
+  },
   layout: 'dashboard',
   name: 'empresa',
 
@@ -372,6 +394,31 @@ export default {
   },
   data() {
     return {
+      extensions: [
+        Blockquote,
+        Link,
+        Underline,
+        Strike,
+        Italic,
+        ListItem,
+        BulletList,
+        OrderedList,
+
+        [
+          Heading,
+          {
+            options: {
+              levels: [1, 2, 3],
+            },
+          },
+        ],
+        Bold,
+        Link,
+
+        HorizontalRule,
+        Paragraph,
+        HardBreak,
+      ],
       e1: 1,
       route: '/web/1',
       empresa: [],
@@ -381,16 +428,7 @@ export default {
       items: [],
       activator: null,
       attach: null,
-      colors: [
-        'deep-purple',
-        'green',
-        'purple',
-        'indigo',
-        'cyan',
-        'teal',
-        'orange',
-        'blue',
-      ],
+
       editing: null,
       editingIndex: -1,
       nonce: 1,
@@ -400,6 +438,16 @@ export default {
       search: null,
       y: 0,
       redes: {},
+      nosotros: [],
+      mision: '',
+      vision: '',
+      etiquetas: {
+        historia: '',
+        nosotros: '',
+        mision: '',
+        vision: '',
+      },
+
       network: [
         {
           nombre: 'Link Facebook',
@@ -443,6 +491,9 @@ export default {
       uplogo: null,
       Favi: null,
       upFavi: null,
+      upNosotros: null,
+      upMision: null,
+      upVision: null,
       loading: false,
       timeout: 2500,
       alert: {
@@ -450,28 +501,48 @@ export default {
         type: 'error',
         text: '',
       },
+      usView: '',
+      type: 'single',
     }
   },
-  watch: {
-    model(val, prev) {
-      if (val.length === prev.length) return
-
-      this.model = val.map((v) => {
-        if (typeof v === 'string') {
-          v = {
-            text: v,
-            color: this.colors[this.nonce - 1],
-          }
-
-          this.items.push(v)
-
-          this.nonce++
-        }
-
-        return v
-      })
+  computed: {
+    imgX() {
+      return this.empresa.nosotros
     },
+    logoX() {
+      return this.empresa.logo
+    },
+    // nosotro:{
+    //     get() {
+    //     console.log('carga')
+    //     return this.nosotros
+    //   },
+    //   set(value) {
+    //     console.log(value, 'setea')
+    //    this.nosotros = value
+    //   },
+    // }
   },
+  // watch: {
+  //   model(val, prev) {
+  //     if (val.length === prev.length) return
+
+  //     this.model = val.map((v) => {
+  //       if (typeof v === 'string') {
+  //         v = {
+  //           text: v,
+  //           color: this.colors[this.nonce - 1],
+  //         }
+
+  //         this.items.push(v)
+
+  //         this.nonce++
+  //       }
+
+  //       return v
+  //     })
+  //   },
+  // },
   mounted() {
     this.load()
   },
@@ -481,13 +552,14 @@ export default {
       this.isBusy = true
       try {
         let response = await this.crud('get', this.route)
-
         this.empresa = response.data.data
-        this.model = this.empresa.etiquetas
-
+        
+         this.etiquetas = this.empresa.etiquetas
+        // this.mision = this.empresa.mision
+        // this.vision = this.empresa.vision
         //this.footer = this.empresa.footer
-        //console.log(this.empresa.redes, 'uno')
-        this.isBusy = false
+        // console.log(this.empresa.nosotros, 'uno')
+
         if (this.empresa.redes === null) {
           this.empresa.redes = this.network
         }
@@ -496,7 +568,8 @@ export default {
         } else {
           this.footer = this.empresa.footer
         }
-       // console.log(this.empresa.redes, 'dos')
+        this.isBusy = false
+        // console.log(this.empresa.redes, 'dos')
       } catch (error) {
         this.alert.active = !this.alert.active
         this.alert.type = 'red'
@@ -517,7 +590,7 @@ export default {
       const data = new FormData()
       data.append('_method', 'PUT')
       data.append('titulo', this.empresa.titulo)
-      // data.append('descripcion', this.empresa.descripcion)
+      data.append('descripcion', this.empresa.descripcion)
       data.append('logo', this.uplogo)
       data.append('favicon', this.upFavi)
       data.append('redes', JSON.stringify(this.empresa.redes))
@@ -525,8 +598,8 @@ export default {
       data.append('mision', this.empresa.mision)
       data.append('vision', this.empresa.vision)
       data.append('footer', JSON.stringify(this.footer))
-      data.append('etiquetas', JSON.stringify(this.model))
-     // console.log(data)
+      data.append('etiquetas', JSON.stringify(this.etiquetas))
+      // console.log(data)
       try {
         let response = await this.crud('post', this.route, data)
         this.alert.active = true
@@ -545,36 +618,21 @@ export default {
       }
     },
 
-    onFileChange(evt) {
-      let imglogo = evt.target.files[0]
-//console.log(imglogo, '1')
-      this.uplogo = imglogo
-      var reader = new FileReader()
-
-      reader.onload = (e) => {
-        this.logo = e.target.result
-      }
-      reader.readAsDataURL(imglogo)
-      //console.log(imglogo, '2', this.logo)
+    imagenLogo(file) {
+      this.uplogo = file.target.files[0]
     },
-
-    onFileChangef(evt) {
-      let imglogo = evt.target.files[0]
-
-      this.upFavi = imglogo
-      var reader = new FileReader()
-
-      reader.onload = (e) => {
-        this.Favi = e.target.result
-      }
-      reader.readAsDataURL(imglogo)
+    imagenFavi(file) {
+      this.upFavi = file.target.files[0]
     },
-    imglogo() {
-      document.getElementById('file-logo').click()
+    imagenUS(file) {
+      this.nosotros = file.target.files[0]
     },
-    imgfavi() {
-      document.getElementById('file-favi').click()
+    imagenMi(file) {
+      this.mision = file.target.files[0]
     },
+    imagenVi(file) {
+      this.vision = file.target.files[0]
+    }
   },
 }
 </script>

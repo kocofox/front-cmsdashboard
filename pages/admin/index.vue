@@ -116,7 +116,7 @@ export default {
     async load() {
       try {
         //let response = await this.crud('get', '/home/')
-        let response = await this.crud('get', '/dashboard/')
+        let response = await this.crud('get', '/dashboard')
        // console.log(response.data.data, 'yo')
         this.clima = response.data.data.Clima.ciudades[0].lima
         this.tipoacambio = response.data.data.Cambio.Cotizacion[0]
